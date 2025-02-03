@@ -1,0 +1,51 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const PaymentPage = () => {
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [amount, setAmount] = useState("");
+  const [status, setStatus] = useState("");
+
+  const handlePayment = async () => {
+    if (!paymentMethod || !amount) {
+      setStatus("Selecciona un método de pago y monto válido");
+      return;
+    }
+
+    // Simulación de API de pago
+    setStatus("Procesando pago...");
+    setTimeout(() => {
+      setStatus("Pago realizado con éxito");
+    }, 2000);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-md p-6">
+        <CardContent>
+          <h2 className="text-xl font-bold mb-4">Pago en Línea</h2>
+          <input
+            type="number"
+            placeholder="Monto a pagar"
+            className="w-full border p-2 rounded mb-4"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <select
+            className="w-full border p-2 rounded mb-4"
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
+            <option value="">Selecciona método de pago</option>
+            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+            <option value="transferencia">Transferencia Bancaria</option>
+          </select>
+          <Button onClick={handlePayment} className="w-full">Pagar</Button>
+          {status && <p className="mt-4 text-center text-sm text-gray-600">{status}</p>}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default PaymentPage;
